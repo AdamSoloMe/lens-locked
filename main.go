@@ -8,8 +8,8 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request){
-	w.Header().Set("Content-Type","text/html: charset=utf-8")
-	fmt.Fprint(w,"<h1.Welcome to my awesome site!</h1>")
+	w.Header().Set("Content-Type","text/html; charset=utf-8")
+	fmt.Fprint(w,"<h1> Welcome to my Awesome site! </h1>")
 }
 
 //default status code is 200
@@ -18,12 +18,12 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 func handlerFunc(w http.ResponseWriter, r *http.Request){
 	//explictily setting content type
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	fmt.Fprint(w,"<h1>welcome to my Awsome Site </h1>")//go print statement but allows to control where to print to
+	fmt.Fprint(w,"<h1> welcome to my Awsome Site </h1>")//go print statement but allows to control where to print to
 }
 
 func contactHandler(w http.ResponseWriter,r *http.Request){
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	fmt.Fprint(w,"<h1> Contact page</h1><p>To get in touch email me at <a href=\"mailto:mrfanstatic2005@gmail.com\"></a> </p>")
+	fmt.Fprint(w,"<h1> Contact page</h1><p>To get in touch email me at <a href=\"mailto:mrfanstatic2005@gmail.com\">mrfanstatic2005@gmail.com</a> </p>")
 
 }
 
@@ -58,7 +58,7 @@ func main(){
 
 	//good dev indicator that the server is running
 	fmt.Println("Starting Server on 3000")
-	http.ListenAndServe(":3000",nil)//this function setups and starts the server to listern on port 3000
+	http.ListenAndServe(":3000",r)//this function setups and starts the server to listern on port 3000
 
 	//routing deciding which pages to show the user 
 }
