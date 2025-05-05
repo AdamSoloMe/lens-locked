@@ -7,6 +7,19 @@ import (
 
 //The net/http package in the standard library even has a type for it - http.HandlerFunc.
 
+//basic routing
+
+func (router Router) ServeHttp(w http.ResponseWriter, r *http.Request){
+	switch r.URL.Path{
+	case "/":
+		handlerFunc(w,r)
+	case "/contact":
+		contactHandler(w,r)
+	default:
+		http.Error(w,"Page Not found",http.StatusNotFound)
+	}
+}
+
 
 //default status code is 200
 //http request is not an interface but a pointer to a struct type of Http request
