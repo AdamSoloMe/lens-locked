@@ -27,6 +27,7 @@ func contactHandler(w http.ResponseWriter,r *http.Request){
 
 }
 
+
 func faqHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Contet-Type","text/html; charset=utf-8")
 	fmt.Fprint(w, `<h1> FAQ Page </h1>
@@ -51,6 +52,7 @@ func main(){
 	r.Get("/",homeHandler)
 	r.Get("/contact",contactHandler)
 	r.Get("/faq",faqHandler)
+
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)
 		
