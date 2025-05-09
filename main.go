@@ -2,42 +2,83 @@ package main
 
 import (
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
+	"path/filepath"
 
 	"github.com/go-chi/chi/v5"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	fmt.Fprint(w,"<h1> Welcome to my Awesome site! </h1>")
+	//how to avoid filepath issues 
+	tplPath :=filepath.Join("templates","home.gohtml")
+	tpl, err := template.ParseFiles(tplPath)
+	if err != nil{ //placeholder for when I enventually put in parsing errors
+		log.Printf("Parising template: %v",err)
+		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
+		return
+	}
+	err= tpl.Execute(w,nil)
+	if err !=nil{
+		log.Printf("executing template: %v",err)
+		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
+		return
+	}
+
 }
 
+
+func contactHandler(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type","text/html; charset=utf-8")
+	//how to avoid filepath issues 
+	tplPath :=filepath.Join("templates","contacts.gohtml")
+	tpl, err := template.ParseFiles(tplPath)
+	if err != nil{ //placeholder for when I enventually put in parsing errors
+		log.Printf("Parising template: %v",err)
+		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
+		return
+	}
+	err= tpl.Execute(w,nil)
+	if err !=nil{
+		log.Printf("executing template: %v",err)
+		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
+		return
+	}
+}
 //default status code is 200
 //http request is not an interface but a pointer to a struct type of Http request
 //the response writer is an interface allows for mulitpe impelemntaions and also to test it easier
-func handlerFunc(w http.ResponseWriter, r *http.Request){
-	//explictily setting content type
-	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	fmt.Fprint(w,"<h1> welcome to my Awsome Site </h1>")//go print statement but allows to control where to print to
-}
+// func handlerFunc(w http.ResponseWriter, r *http.Request){
+// 	//explictily setting content type
+// 	w.Header().Set("Content-Type","text/html; charset=utf-8")
+// 	fmt.Fprint(w,"<h1> welcome to my Awsome Site </h1>")//go print statement but allows to control where to print to
+// }
 
-func contactHandler(w http.ResponseWriter,r *http.Request){
-	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	fmt.Fprint(w,"<h1> Contact page</h1><p>To get in touch email me at <a href=\"mailto:mrfanstatic2005@gmail.com\">mrfanstatic2005@gmail.com</a> </p>")
+// func contactHandler(w http.ResponseWriter,r *http.Request){
+// 	w.Header().Set("Content-Type","text/html; charset=utf-8")
+// 	fmt.Fprint(w,"<h1> Contact page</h1><p>To get in touch email me at <a href=\"mailto:mrfanstatic2005@gmail.com\">mrfanstatic2005@gmail.com</a> </p>")
 
-}
+// }
 
 
 func faqHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Contet-Type","text/html; charset=utf-8")
-	fmt.Fprint(w, `<h1> FAQ Page </h1>
-	<ul>
-	<li><b> Is there a free version> </b> Yes! we offer a free trial for 30 days on any paid plans.</li>
-	<li><b> What are your support hours? </b> We have support staff answering emails on weekends 24/7,
-	though response time may be a bit slower on weekends.</li>
-	<li> <b> How do I contact support? </b> Email us - <a href="mailto:support@lenslocked.com">support@lenslocked.com</a></li>
-	</ul>
-	`)
+	//how to avoid filepath issues 
+	tplPath :=filepath.Join("templates","faq.gohtml")
+	tpl, err := template.ParseFiles(tplPath)
+	if err != nil{ //placeholder for when I enventually put in parsing errors
+		log.Printf("Parising template: %v",err)
+		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
+		return
+	}
+	err= tpl.Execute(w,nil)
+	if err !=nil{
+		log.Printf("executing template: %v",err)
+		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
+		return
+	}
 
 }
 
