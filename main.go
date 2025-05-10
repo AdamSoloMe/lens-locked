@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
 
+    "github.com/AdamSoloMe/lenslocked/views"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -14,18 +14,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
 	//how to avoid filepath issues 
 	tplPath :=filepath.Join("templates","home.gohtml")
-	tpl, err := template.ParseFiles(tplPath)
-	if err != nil{ //placeholder for when I enventually put in parsing errors
-		log.Printf("Parising template: %v",err)
-		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
-		return
-	}
-	err= tpl.Execute(w,nil)
-	if err !=nil{
-		log.Printf("executing template: %v",err)
-		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
-		return
-	}
+	executeTemplate(w,tplPath)
 
 }
 
@@ -34,18 +23,7 @@ func contactHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
 	//how to avoid filepath issues 
 	tplPath :=filepath.Join("templates","contacts.gohtml")
-	tpl, err := template.ParseFiles(tplPath)
-	if err != nil{ //placeholder for when I enventually put in parsing errors
-		log.Printf("Parising template: %v",err)
-		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
-		return
-	}
-	err= tpl.Execute(w,nil)
-	if err !=nil{
-		log.Printf("executing template: %v",err)
-		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
-		return
-	}
+	executeTemplate(w,tplPath)
 }
 //default status code is 200
 //http request is not an interface but a pointer to a struct type of Http request
@@ -67,21 +45,23 @@ func faqHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Contet-Type","text/html; charset=utf-8")
 	//how to avoid filepath issues 
 	tplPath :=filepath.Join("templates","faq.gohtml")
-	tpl, err := template.ParseFiles(tplPath)
+	executeTemplate(w,tplPath)
+}
+
+func executeTemplate(w http.ResponseWriter , filepath string){
+	w.Header().Set("Contet-Type","text/html; charset=utf-8")
+	t,err:= views.ParseTemplate(filepath)
+	// tpl, err := template.ParseFiles(filepath)
 	if err != nil{ //placeholder for when I enventually put in parsing errors
 		log.Printf("Parising template: %v",err)
 		http.Error(w,"There was an issue parsing this template", http.StatusInternalServerError)
 		return
 	}
-	err= tpl.Execute(w,nil)
-	if err !=nil{
-		log.Printf("executing template: %v",err)
-		http.Error(w,"There was an error executing the template ", http.StatusInternalServerError)
-		return
-	}
-
+	// viewTpl := views.Template{
+	// 	HTMLTpl: tpl,
+	// }
+	t.ExecuteTemplate(w,nil)
 }
-
 
 func main(){
 	//how to register our handler function is with http.handlerfunc
