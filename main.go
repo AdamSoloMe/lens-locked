@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/AdamSoloMe/lenslocked/controllers"
+	"github.com/AdamSoloMe/lenslocked/templates"
 	"github.com/AdamSoloMe/lenslocked/views"
 	"github.com/go-chi/chi/v5"
 )
@@ -75,21 +76,21 @@ func main(){
 	//using chi 
 	r :=chi.NewRouter() //How to setup New Chi Router
 
-	tpl,err:= views.ParseTemplate(filepath.Join("templates","home.gohtml"))
+	tpl,err:= views.ParseFS(templates.FS,"home.gohtml")
 
 	if err != nil{
 		panic(err)
 	}
 	r.Get("/",controllers.StaticHandler(tpl))
 
-	tpl,err = views.ParseTemplate(filepath.Join("templates","contacts.gohtml"))
+	tpl,err = views.ParseFS(templates.FS,"contacts.gohtml")
 
 	if err != nil{
 		panic(err)
 	}
 	r.Get("/contact",controllers.StaticHandler(tpl))
 
-	tpl,err = views.ParseTemplate(filepath.Join("templates","faq.gohtml"))
+	tpl,err = views.ParseFS(templates.FS,"faq.gohtml")
 
 	if err != nil{
 		panic(err)
