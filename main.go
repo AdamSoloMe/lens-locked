@@ -95,7 +95,7 @@ func main(){
 	if err != nil{
 		panic(err)
 	}
-	r.Get("/faq",controllers.StaticHandler(tpl))
+	r.Get("/faq",controllers.FAQ(tpl))
 
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)
