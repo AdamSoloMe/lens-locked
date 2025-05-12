@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-    "github.com/AdamSoloMe/lenslocked/views"
+	"github.com/AdamSoloMe/lenslocked/controllers"
+	"github.com/AdamSoloMe/lenslocked/views"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -25,6 +26,9 @@ func contactHandler(w http.ResponseWriter, r *http.Request){
 	tplPath :=filepath.Join("templates","contacts.gohtml")
 	executeTemplate(w,tplPath)
 }
+
+
+
 //default status code is 200
 //http request is not an interface but a pointer to a struct type of Http request
 //the response writer is an interface allows for mulitpe impelemntaions and also to test it easier
@@ -70,9 +74,27 @@ func main(){
 
 	//using chi 
 	r :=chi.NewRouter() //How to setup New Chi Router
-	r.Get("/",homeHandler)
-	r.Get("/contact",contactHandler)
-	r.Get("/faq",faqHandler)
+
+	tpl,err:= views.ParseTemplate(filepath.Join("templates","home.gohtml"))
+
+	if err != nil{
+		panic(err)
+	}
+	r.Get("/",controllers.StaticHandler(tpl))
+
+	tpl,err = views.ParseTemplate(filepath.Join("templates","contacts.gohtml"))
+
+	if err != nil{
+		panic(err)
+	}
+	r.Get("/contact",controllers.StaticHandler(tpl))
+
+	tpl,err = views.ParseTemplate(filepath.Join("templates","faq.gohtml"))
+
+	if err != nil{
+		panic(err)
+	}
+	r.Get("/faq",controllers.StaticHandler(tpl))
 
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)
