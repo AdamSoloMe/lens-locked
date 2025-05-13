@@ -97,15 +97,20 @@ func main(){
 	}
 	r.Get("/faq",controllers.FAQ(tpl))
 
-	tpl,err = views.ParseFS(templates.FS,"signup.gohtml","tailwind.gohtml")
-	if err != nil{
-		panic(err)
-	}
+	// tpl,err = views.ParseFS(templates.FS,"signup.gohtml","tailwind.gohtml")
+	// if err != nil{
+	// 	panic(err)
+	// }
 
 	usersC :=controllers.Users{}
+	usersC.Templates.New=views.Must(views.ParseFS(
+		templates.FS,
+		"signup.gohtml",
+		"tailwind.gohtml",
+		))
 
-	r.Get("/signup",controllers.StaticHandler(tpl))
-	usersC.Templates.New=
+	r.Get("/signup",usersC.New)
+
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)
 		
