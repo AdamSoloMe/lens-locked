@@ -88,7 +88,7 @@ func main(){
 	if err != nil{
 		panic(err)
 	}
-	r.Get("/contact",controllers.StaticHandler(tpl))
+	r.Get("/contacts",controllers.StaticHandler(tpl))
 
 	tpl,err = views.ParseFS(templates.FS,"faq.gohtml","tailwind.gohtml")
 
