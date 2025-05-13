@@ -18,6 +18,8 @@ func ParseTemplate(filepath string) (Template, error){
 	},nil
 }
 
+//for embedding html files in the go exceutbale using the file system
+// the pattern is used to create the variaic argument like *args/*kwargs in python 
 func ParseFS(fs fs.FS, pattern ...string) (Template,error){
 	tpl,err := template.ParseFS(fs,pattern...)
 	if err != nil{

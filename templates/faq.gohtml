@@ -3,7 +3,7 @@
  {{range .}}
  {{template "qa" .}}
  {{end}}
-{{/* <pre>{{.}}</pre> */}}
+{{/* <pre>{{.}} the . is used to render data into the named template </pre> */}}
 {{define "qa"}}
 <li><b>{{.Question}}</b> {{.Answer}} </li>
 {{end}}

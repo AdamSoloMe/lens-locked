@@ -76,7 +76,7 @@ func main(){
 	//using chi 
 	r :=chi.NewRouter() //How to setup New Chi Router
 
-	tpl,err:= views.ParseFS(templates.FS,"home.gohtml")
+	tpl,err:= views.ParseFS(templates.FS,"home.gohtml","layout-parts.gohtml")
 
 	if err != nil{
 		panic(err)
