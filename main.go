@@ -76,21 +76,21 @@ func main(){
 	//using chi 
 	r :=chi.NewRouter() //How to setup New Chi Router
 
-	tpl,err:= views.ParseFS(templates.FS,"home.gohtml","layout-parts.gohtml")
+	tpl,err:= views.ParseFS(templates.FS,"home.gohtml","tailwind.gohtml")
 
 	if err != nil{
 		panic(err)
 	}
 	r.Get("/",controllers.StaticHandler(tpl))
 
-	tpl,err = views.ParseFS(templates.FS,"contacts.gohtml")
+	tpl,err = views.ParseFS(templates.FS,"contacts.gohtml","tailwind.gohtml")
 
 	if err != nil{
 		panic(err)
 	}
 	r.Get("/contact",controllers.StaticHandler(tpl))
 
-	tpl,err = views.ParseFS(templates.FS,"faq.gohtml")
+	tpl,err = views.ParseFS(templates.FS,"faq.gohtml","tailwind.gohtml")
 
 	if err != nil{
 		panic(err)
