@@ -1,0 +1,16 @@
+{{template "header"}}
+<form action="/users" method="post">
+    <div>
+        <label for="email">Email Address </label>
+        {{/* name is how the server will reference the input information  */}}
+        <input name="email" id="email" type="email" placeholder="Email Address" 
+        required autocomplete="email"/>
+    </div>
+    <div>
+            <label>Password</label>
+            <input name="password" id="password" type="password" placeholder="Password" required/>
+    <div>
+            <button type="submit">Sign up</button>
+    </div>
+</form>
+{{template "footer".}}
