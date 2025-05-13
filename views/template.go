@@ -8,6 +8,15 @@ import (
 	"net/http"
 )
 
+func Must(t Template, err error) Template{
+	if err !=nil {
+		panic(err)
+		
+	}
+	return t
+}
+
+
 func ParseTemplate(filepath string) (Template, error){
 	tpl,err := template.ParseFiles(filepath)
 	if err != nil{ //placeholder for when I enventually put in parsing errors

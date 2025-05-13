@@ -101,8 +101,11 @@ func main(){
 	if err != nil{
 		panic(err)
 	}
-	r.Get("/signup",controllers.StaticHandler(tpl))
 
+	usersC :=controllers.Users{}
+
+	r.Get("/signup",controllers.StaticHandler(tpl))
+	usersC.Templates.New=
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)
 		
