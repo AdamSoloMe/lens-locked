@@ -110,6 +110,7 @@ func main(){
 		))
 
 	r.Get("/signup",usersC.New)
+	r.Post("/users",usersC.CreateUser)
 
 	r.NotFound(func (w http.ResponseWriter, r *http.Request){
 		http.Error(w,"Page not found",http.StatusNotFound)

@@ -1,14 +1,13 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
-
-	"github.com/AdamSoloMe/lenslocked/views"
 )
 
 type Users struct{
 	Templates struct{
-		New views.Template
+		New Template //replacing views.template
 	}
 }
 
@@ -16,4 +15,15 @@ type Users struct{
 func (u Users) New(w http.ResponseWriter,r *http.Request){
 	//will use view to render 
 	u.Templates.New.ExecuteTemplate(w,nil)
+}
+
+func (u Users) CreateUser( w http.ResponseWriter, r *http.Request){
+	err:= r.ParseForm()
+	if err !=nil {
+		http.Error(w,err.Error(),http.StatusBadRequest)
+		return
+	}
+	fmt.Fprint(w, "Email: ",r.FormValue("email"))
+	fmt.Fprint(w, "Password: ",r.FormValue("password"))
+
 }
